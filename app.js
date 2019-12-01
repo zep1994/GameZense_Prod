@@ -28,12 +28,11 @@ http.createServer((req, res) => {
             // to interact with the chunks of data, we need to buffer them
             const parsed_body = Buffer.concat(body).toString()
             const message = parsed_body.split("=")[1]
-            console.log(message)
+            fs.writeFileSync('post.txt', message)
+            res.statusCode = 302 
+            res.setHeader('Location', '/')
+            return res.end()
         })
-        fs.writeFileSync('post.txt', 'DUMMY')
-        res.statusCode = 302 
-        res.setHeader('Location', '/')
-        return res.end()
     }
     res.end('hello')
 }).listen(3000)
